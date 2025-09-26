@@ -26,7 +26,29 @@ func (ur *UserRepository) GetAllUsers() ([]*model.User, error) {
 	return users, nil
 }
 
+func (ur *UserRepository) SaveUser(user *model.User) error {
+	return ur.DB.Save(user).Error
+}
+
 func (ur *UserRepository) DeleteUser(id uint) error {
 	result := ur.DB.Delete(&model.User{}, id)
 	return result.Error
+}
+
+func (ur *UserRepository) FindByEmail(email string) (*model.User, error) {
+	var user model.User
+	err := ur.DB.Where("Email = ?", email).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (ur *UserRepository) FindById(id uint) (*model.User, error) {
+	var user model.User
+	err := ur.DB.Where("ID = ?", id).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

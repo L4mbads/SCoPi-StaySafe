@@ -7,11 +7,11 @@ export default function UserContractRequest() {
       {/* Navbar */}
       <LandingPage />
 
-      <div className="flex pt-26">
+      <div className="flex">
         {/* Sidebar */}
         <UserSideBar />
         {/* Main Content */}
-        <div className="flex-1 pl-[15em] p-6 pt-3">
+        <div className="flex-1 p-6 pt-3">
           {/* Contract Requests Header */}
           <div className="p-1">
             <h2 className="text-xl font-bold text-[#3A3985]">Contract Requests</h2>
@@ -40,8 +40,8 @@ export default function UserContractRequest() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <p className="text-[#3A3985]">Start Date</p>
                   <p className="text-[#3A3985]">End Date</p>
-                  <p className="text-[#3A3985]">Client</p>
-                  <p className="text-[#3A3985]">Department</p>
+                  <p className="text-[#3A3985]">Client Name</p>
+                  <p className="text-[#3A3985]">Client Title</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <input type="date" className="border rounded-lg p-2 w-full text-gray-900" />
