@@ -32,5 +32,5 @@ type CreateContractRequest struct {
 	EndDate                time.Time     `json:"end_date" binding:"required"`
 	ServiceDescription     string        `json:"service_description" binding:"required"`
 	FinalDeliverables      string        `json:"final_deliverables"`
-	Priority               PriorityLevel `json:"priority" binding:"required"`
+	Priority               PriorityLevel `json:"priority"`
 }
