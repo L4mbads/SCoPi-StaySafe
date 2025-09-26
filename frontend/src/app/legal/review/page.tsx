@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LandingPage from "@/components/landingpage";
 import LegalSideBar from "@/components/legal_sidebar";
 
@@ -19,6 +19,7 @@ type ReviewModalProps = {
   show: boolean;
   onClose: () => void;
 };
+
 
 const ReviewModal = ({ show, onClose }: ReviewModalProps) => {
   if (!show) return null;
@@ -88,6 +89,28 @@ const ReviewModal = ({ show, onClose }: ReviewModalProps) => {
 export default function ReviewQueue() {
   const [showModal, setShowModal] = useState(false);
 
+  const [request, setRequest] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchRequest = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/contract_request/", {
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const data = await response.json();
+        setRequest(data.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRequest();
+  }, []);
   return (
     // 1. Set the root container to be a flex column
     <div className="flex min-h-screen flex-col bg-gray-50">
@@ -107,7 +130,7 @@ export default function ReviewQueue() {
               List of contracts awaiting review and approval.
             </p>
           </div>
-          
+
           {/* Filter Section */}
           <div className="bg-white shadow-md rounded-xl p-6 mb-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
@@ -143,15 +166,18 @@ export default function ReviewQueue() {
             </div>
           </div>
 
-          {/* Contract Card */}
-          <div className="bg-white shadow-md rounded-xl p-6 border-l-4 border-red-500">
+          { loading ? (
+            <p>Loading requests...</p>
+          ) : (<>
+            {request.map((req, idx) => (
+          <div key={idx} className="bg-white shadow-md rounded-xl p-6 mb-6 border-l-4 border-red-500">
             <div className="flex flex-col sm:flex-row justify-between items-start mb-4 gap-4">
               <div>
                 <h2 className="font-semibold text-gray-800 text-lg">
-                  Supplier Contract for PT. Mega Corp
+                  {req.contract_title}
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Value: Rp 2.5M | Term: 24 months | Submitted by: Mike Brown
+                  Value: Rp {req.estimated_value} | Term: {getMonthSpan(new Date(req.start_date), new Date(req.end_date))} bulan | Klien: {req.client_name}
                 </p>
               </div>
               <div className="flex gap-2 flex-shrink-0">
@@ -167,11 +193,24 @@ export default function ReviewQueue() {
               <span className="font-bold">AI Note:</span> Payment clauses do not meet company standards. High risk of late payment identified.
             </div>
           </div>
+          ))}
+          </>
+          )}
         </main>
       </div>
-      
+
       {/* Review Modal Popup */}
       <ReviewModal show={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
+}
+
+function getMonthSpan(date1: Date, date2: Date) {
+  let year1 = date1.getFullYear();
+  let month1 = date1.getMonth(); // 0-based (Jan = 0, Dec = 11)
+
+  let year2 = date2.getFullYear();
+  let month2 = date2.getMonth();
+
+  return Math.abs((year2 - year1) * 12 + (month2 - month1));
 }

@@ -84,7 +84,7 @@ export default function UserContractRequest() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchHistory = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/contract_request/self", {
           credentials: "include",
@@ -101,7 +101,7 @@ export default function UserContractRequest() {
       }
     };
 
-    fetchUsers();
+    fetchHistory();
   }, []);
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
