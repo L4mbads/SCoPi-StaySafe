@@ -44,9 +44,9 @@ export default function AdminHome() {
       <LandingPage />
 
       {/* Content with sidebar + main area */}
-      <div className="flex pt-25.5 h-[calc(100vh-80px)]">
+      <div className="flex pt-25.5 h-100vh">
         {/* Sidebar kiri full height */}
-        <aside className="w-64 h-192 bg-white shadow-md p-6">
+        <aside className="w-full h-full max-w-3xs bg-white shadow-md p-6">
           <div className="flex items-center space-x-2 mb-8">
             <img src="/people-icon.png" alt="User Icon" className="w-6 h-6" />
             <span className="font-medium text-gray-700">User Management</span>
@@ -137,9 +137,9 @@ export default function AdminHome() {
           </div>
 
           {/* Right: Role Management Summary */}
-          <div className="w-64 relative flex items-center justify-center">
+          <div className=" h-full min-w-3xs relative flex items-center justify-center">
             {/* Background border */}
-            <div className="absolute inset-0 bg-white border rounded-xl shadow-lg z-0 h-160" />
+            <div className="absolute inset-0 bg-white border rounded-xl shadow-lg z-0 w -full h-full" />
             <div className="relative z-10 w-full space-y-4 p-4">
               <h3 className="font-semibold text-gray-700 mb-2 text-center">Manajemen Peran</h3>
               <div className="bg-gradient-to-r from-blue-50 to-white p-4 rounded-lg shadow text-center">

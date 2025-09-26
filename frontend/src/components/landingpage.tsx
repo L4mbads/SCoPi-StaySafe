@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function LandingPage() {
   return (
-    <nav className="w-full bg-gradient-to-r from-indigo-900 via-blue-700 to-blue-500 fixed">
+    <nav className="w-full bg-gradient-to-r from-indigo-900 via-blue-700 to-blue-500 fixed h-26">
       <div className="flex justify-between items-center px-6 py-3">
         <div className="flex items-center space-x-3">
           <Image src="/logo-white.png" alt="SCoPi Logo" width={81} height={81} priority />
