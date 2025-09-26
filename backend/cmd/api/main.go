@@ -1,6 +1,7 @@
 package main
 
 import (
+	"SCoPi-backend/internal/ai"
 	"SCoPi-backend/internal/database"
 	"log"
 
@@ -16,6 +17,7 @@ func main() {
 	r := gin.Default()
 
 	database.ConnectDB()
+	ai.ConnectAI()
 
 	r.Run(":8080")
 }

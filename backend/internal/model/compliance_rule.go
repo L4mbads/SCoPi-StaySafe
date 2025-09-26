@@ -1,7 +1,9 @@
 package model
 
+import "gorm.io/gorm"
+
 type ComplianceRule struct {
-	ID        uint
-	Title     string
-	Condition string
+	gorm.Model
+	Title     string `json:"title"`
+	Condition string `json:"condition"`
 }
