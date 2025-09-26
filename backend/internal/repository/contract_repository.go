@@ -23,8 +23,8 @@ func (cr *ContractRepository) CreateContract(c *model.Contract) (*model.Contract
 	return c, nil
 }
 
-func (cr *ContractRepository) GetAllContracts() ([]model.Contract, error) {
-	var contracts []model.Contract
+func (cr *ContractRepository) GetAllContracts() ([]*model.Contract, error) {
+	var contracts []*model.Contract
 	if err := cr.DB.Preload("User").Find(&contracts).Error; err != nil {
 		return nil, err
 	}

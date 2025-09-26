@@ -34,3 +34,12 @@ type CreateContractRequest struct {
 	FinalDeliverables      string        `json:"final_deliverables"`
 	Priority               PriorityLevel `json:"priority"`
 }
+
+type ContractCreateInput struct {
+	Title string `form:"title" binding:"required"`
+}
+
+type ContractUpdateInput struct {
+	Title  string `json:"title"`
+	Status string `json:"status"`
+}

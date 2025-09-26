@@ -11,7 +11,8 @@ func RegisterRoutes(
 	r *gin.Engine,
 	authHandler *handler.AuthHandler,
 	userHandler *handler.UserHandler,
-	contractRequestHandler *handler.ContractRequestHandler) {
+	contractRequestHandler *handler.ContractRequestHandler,
+	contractHandler *handler.ContractHandler) {
 
 	r.RemoveExtraSlash = true
 	api := r.Group("/api")
@@ -19,6 +20,7 @@ func RegisterRoutes(
 		registerAuthRoutes(api, authHandler)
 		registerUserRoutes(api, userHandler)
 		registerContractRequestHandler(api, contractRequestHandler)
+		registerContractHandler(api, contractHandler)
 	}
 }
 
@@ -48,5 +50,15 @@ func registerContractRequestHandler(api *gin.RouterGroup, contractRequestHandler
 		conreq.GET("/", contractRequestHandler.GetAllContractRequests)
 		conreq.GET("/self", contractRequestHandler.GetMyContractRequests)
 		conreq.POST("/", contractRequestHandler.CreateContractRequest)
+	}
+}
+
+func registerContractHandler(api *gin.RouterGroup, contractHandler *handler.ContractHandler) {
+	con := api.Group("/contracts")
+	con.Use(middleware.RequireAuth)
+	{
+		con.GET("/", contractHandler.GetAllContracts)
+		con.GET("/:id/analyze", contractHandler.AnalyzeContract)
+		con.POST("/", contractHandler.CreateContract)
 	}
 }

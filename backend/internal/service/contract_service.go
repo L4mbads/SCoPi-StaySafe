@@ -5,11 +5,15 @@ import (
 	"SCoPi-backend/internal/model"
 	"SCoPi-backend/internal/repository"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
+	"mime/multipart"
 	"os"
+	"path/filepath"
 
+	"code.sajari.com/docconv"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -22,60 +26,128 @@ func NewContractService(db *gorm.DB) *ContractService {
 		ContractRepository: *repository.NewContractRepository(db),
 	}
 }
+func (s *ContractService) UploadAndCreateContract(userID uint, input model.ContractCreateInput, file *multipart.FileHeader) (*model.Contract, error) {
+	storagePath := "./contract_storage"
+	if _, err := os.Stat(storagePath); os.IsNotExist(err) {
+		os.Mkdir(storagePath, os.ModePerm)
+	}
 
-// CreateContract handles the business logic for creating a contract.
-func (s *ContractService) CreateContract(contract *model.Contract) (*model.Contract, error) {
-	return s.ContractRepository.CreateContract(contract)
+	fileExt := filepath.Ext(file.Filename)
+	uniqueFilename := fmt.Sprintf("%d", userID) + file.Filename + fileExt
+	filePath := filepath.Join(storagePath, uniqueFilename)
+
+	err := s.saveFile(file, filePath)
+	if err != nil {
+		return nil, err
+	}
+
+	contract := &model.Contract{
+		Title:    input.Title,
+		Status:   model.Draft, // Default status for a newly uploaded contract
+		Filepath: filePath,
+		UserID:   userID,
+	}
+
+	_, err = s.ContractRepository.CreateContract(contract)
+	if err != nil {
+		os.Remove(filePath)
+		return nil, errors.New("failed to create contract record")
+	}
+
+	return contract, nil
 }
 
-// GetAllContracts retrieves all contracts.
-func (s *ContractService) GetAllContracts() ([]model.Contract, error) {
+func (s *ContractService) saveFile(file *multipart.FileHeader, filePath string) error {
+	src, err := file.Open()
+	if err != nil {
+		return err
+	}
+	defer src.Close()
+
+	dst, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer dst.Close()
+
+	if _, err = dst.ReadFrom(src); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *ContractService) GetContractByID(id uint) (*model.Contract, error) {
+	contract, err := s.ContractRepository.GetContractByID(id)
+	if err != nil && errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, errors.New("contract not found")
+	}
+	return contract, err
+}
+
+func (s *ContractService) GetAllContracts() ([]*model.Contract, error) {
 	return s.ContractRepository.GetAllContracts()
 }
 
-// GetContractByID retrieves a contract by its ID.
-func (s *ContractService) GetContractByID(id uint) (*model.Contract, error) {
-	return s.ContractRepository.GetContractByID(id)
-}
-
-// UpdateContract handles the business logic for updating a contract.
-func (s *ContractService) UpdateContract(id uint, updatedData *model.Contract) (*model.Contract, error) {
-	// First, find the existing contract
-	existingContract, err := s.ContractRepository.GetContractByID(id)
+func (s *ContractService) UpdateContract(id uint, input model.ContractUpdateInput) error {
+	contract, err := s.GetContractByID(id)
 	if err != nil {
-		return nil, err // Error will be gorm.ErrRecordNotFound if it doesn't exist
+		return err
 	}
 
-	// Update the fields
-	existingContract.Title = updatedData.Title
-	existingContract.Status = updatedData.Status
-	existingContract.Filepath = updatedData.Filepath
-	// You might want to add logic to prevent UserID from being changed, or handle it specifically.
-	existingContract.UserID = updatedData.UserID
+	if input.Title != "" {
+		contract.Title = input.Title
+	}
 
-	// Save the updated contract
-	return s.ContractRepository.UpdateContract(existingContract)
+	if input.Status != "" {
+		var status model.ContractStatus
+		if err := status.UnmarshalJSON([]byte(`"` + input.Status + `"`)); err != nil {
+			return errors.New("invalid status value")
+		}
+		contract.Status = status
+	}
+
+	_, err = s.ContractRepository.UpdateContract(contract)
+	return err
 }
 
-// DeleteContract deletes a contract by its ID.
 func (s *ContractService) DeleteContract(id uint) error {
-	// You could add business logic here, e.g., check if the contract can be deleted.
+	contract, err := s.GetContractByID(id)
+	if err != nil {
+		return err
+	}
+
+	if contract.Filepath != "" {
+		if err := os.Remove(contract.Filepath); err != nil {
+			gin.SetMode(gin.DebugMode)
+			log.Printf("Warning: Failed to delete file %s: %v", contract.Filepath, err)
+		}
+	}
+
 	return s.ContractRepository.DeleteContract(id)
 }
 
-func (s *ContractService) AnalyzeContract(ctx context.Context, contractID uint) (*model.ContractAnalysis, error) {
+func (s *ContractService) AnalyzeContract(ctx context.Context, contractID uint) (string, error) {
 	if ai.Client == nil {
-		return nil, errors.New("AI client is not initialized")
+		return "", errors.New("AI client is not initialized")
 	}
 
 	contract, err := s.ContractRepository.GetContractByID(contractID)
 	if err != nil {
-		return nil, fmt.Errorf("contract not found: %w", err)
+		return "", fmt.Errorf("contract not found: %w", err)
 	}
 
-	contractContent, err := os.ReadFile(contract.Filepath)
+	// contractContent, err := os.ReadFile(contract.Filepath)
+	// if err != nil {
+	// 	return "", fmt.Errorf("failed to read contract file %s: %w", "sample_contract.txt", err)
+	// }
+
+	// contractContent, err := extractTextFromPDF(contract.Filepath)
+	// if err != nil {
+	// 	log.Fatalf("Error extracting text: %v", err)
+	// }
+	contractContent, err := docconv.ConvertPath(contract.Filepath)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read contract file %s: %w", "sample_contract.txt", err)
+		log.Fatal(err)
 	}
 
 	prompt := fmt.Sprintf(`
@@ -221,22 +293,22 @@ JSON
   }
 
 }
-  
+
 Here is the contract content:
 ---
 %s
 ---
-`, string(contractContent))
+`, string(contractContent.Body))
 
-	analysisJSON, err := ai.Client.GenerateContent(ctx, "gemini-2.5-pro", prompt)
+	analysis, err := ai.Client.GenerateContent(ctx, "gemini-2.5-pro", prompt)
 	if err != nil {
-		return nil, fmt.Errorf("AI analysis failed: %w", err)
+		return "", fmt.Errorf("AI analysis failed: %w", err)
 	}
 
-	var analysis model.ContractAnalysis
-	if err := json.Unmarshal([]byte(analysisJSON), &analysis); err != nil {
-		return nil, fmt.Errorf("failed to parse AI response: %w. Raw response: %s", err, analysisJSON)
-	}
+	// var analysis model.ContractAnalysis
+	// if err := json.Unmarshal([]byte(analysisJSON), &analysis); err != nil {
+	// 	return nil, fmt.Errorf("failed to parse AI response: %w. Raw response: %s", err, analysisJSON)
+	// }
 
-	return &analysis, nil
+	return analysis, nil
 }
