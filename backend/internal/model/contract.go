@@ -1,10 +1,12 @@
 package model
 
-// Contract struct represents a contract in the database.
+import "gorm.io/gorm"
+
 type Contract struct {
-	ID       uint
-	Title    string
-	Status   string
-	Filepath string
-	UserID   uint
+	gorm.Model
+	Title    string `json:"title"`
+	Status   string `json:"status"`
+	Filepath string `json:"filepath"`
+	UserID   uint   `json:"user_id"` // Foreign key for User
+	User     User   `gorm:"foreignKey:UserID" json:"user"`
 }

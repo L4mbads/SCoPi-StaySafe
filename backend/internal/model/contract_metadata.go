@@ -1,16 +1,18 @@
 package model
 
-import "time"
+import (
+	"time"
 
-// ContractMetadata struct represents metadata associated with a contract.
+	"github.com/lib/pq"
+	"gorm.io/gorm"
+)
+
 type ContractMetadata struct {
-	ID            uint
-	ContractID    uint
-	Contract      Contract
-	Key           string
-	Value         string
-	Parties       []string
-	effectiveDate time.Time
-	ExpiryDate    time.Time
-	ContractValue float64
+	gorm.Model
+	ContractID    uint           `json:"contract_id"` // Foreign key for Contract
+	Contract      Contract       `gorm:"foreignKey:ContractID" json:"contract"`
+	Parties       pq.StringArray `json:"parties" gorm:"type:text[]"`
+	EffectiveDate time.Time      `json:"effective_date"`
+	ExpiryDate    time.Time      `json:"expiry_date"`
+	ContractValue float64        `json:"contract_value"`
 }
