@@ -3,6 +3,8 @@ package service
 import (
 	"SCoPi-backend/internal/model"
 	"SCoPi-backend/internal/repository"
+	"errors"
+	"log"
 
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
@@ -31,6 +33,32 @@ func (s *UserService) CreateUser(input model.RegisterInput) (*model.User, error)
 	}
 
 	return &user, nil
+}
+
+func (s *UserService) CreateDefaultAdmin() {
+	_, err := s.UserRepository.FindByEmail("admin@example.com")
+	if err == nil {
+		log.Println("Default admin user already exists.")
+		return
+	}
+
+	if !errors.Is(err, gorm.ErrRecordNotFound) {
+		log.Printf("Error checking for default admin: %v", err)
+		return
+	}
+
+	log.Println("Creating default admin user...")
+	if _, err := s.CreateUser(model.RegisterInput{
+		Name:            "admin",
+		Email:           "admin@example.com",
+		Role:            "AdminTeam",
+		Password:        "Admin123",
+		ConfirmPassword: "Admin123",
+	}); err != nil {
+		log.Printf("Failed to create default admin user: %v", err)
+		return
+	}
+	log.Println("Default admin user created successfully.")
 }
 
 func (s *UserService) DeleteUser(id uint) error {
