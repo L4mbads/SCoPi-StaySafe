@@ -1,19 +1,57 @@
+"use client";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
+
+const menuItems = [
+  { label: "Dashboard", icon: "/dashboard-icon.png", path: "/user/dashboard" },
+  { label: "Review Queue", icon: "/contract-req-icon.png", path: "/user/contract-request" },
+  { label: "AI Analysis", icon: "/my-contract-icon.png", path: "/user/my-contract" },
+  { label: "Compliance Check", icon: "/notif-icon.png", path: "/user/notification" },
+  { label: "Contact Library", icon: "/notif-icon.png", path: "/user/notification" },
+  { label: "Legal Report", icon: "/notif-icon.png", path: "/user/notification" },
+];
+const profileItems = [
+  { label: "My Profile", icon: "/people-icon.png", path: "/user/profile" },
+];
+
 export default function LegalSideBar() {
+  const activePath = "/legal/dashboard";
+
   return (
-    <div className="w-64 bg-white shadow-lg p-4">
-      <ul className="space-y-4">
-        <p className="text-[#797979] pt-3">Menu</p>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">Dashboard Review</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">Review Queue</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">AI Analysis</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">Compliance Check</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">Contract Library</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">Legal Report</li>
-      </ul>
-      <ul className="space-y-4 pt-60">
-        <li className="text-[#797979]">Profile</li>
-        <li className="text-[#3A3985] hover:text-blue-600 cursor-pointer">My Profile</li>
-      </ul>
-    </div>
+    <aside
+      className="fixed h-screen w-[16vw] justify-between h-screen w-[16vw] min-w-[220px] bg-white shadow-lg"
+      style={{ minHeight: "100vh" }}
+    >
+      <div>
+        <div className="px-6 pt-6">
+          <div className="text-gray-500 text-sm mb-2">Menu</div>
+          <ul className="flex flex-col gap-1">
+            {menuItems.map((item) => (
+              <li
+                key={item.label}
+                className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${activePath === item.path ? "bg-[#DCEDFF] text-[#3A3985]" : "text-[#3A3985] hover:bg-[#F5F7FA]"}`}
+              >
+                <img src={item.icon} alt={item.label} className="w-5 h-5" />
+                <span className="text-base">{item.label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="px-6 bottom-5 fixed">
+        <div className="text-gray-400 text-sm mb-2">Settings</div>
+        <ul className="flex flex-col gap-1">
+          {profileItems.map((item) => (
+            <li
+              key={item.label}
+              className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${activePath === item.path ? "bg-[#DCEDFF] text-[#3A3985]" : "text-[#3A3985] hover:bg-[#F5F7FA]"}`}
+            >
+              <img src={item.icon} alt={item.label} className="w-5 h-5" />
+              <span className="text-base">{item.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
   );
 }
