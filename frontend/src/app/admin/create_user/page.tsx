@@ -64,11 +64,8 @@ export default function AdminCreate() {
         <Image src="/back-button.png" alt="Back" width={74} height={36} />
       </a>
 
-      {/* Shadow Box */}
-      <div className="absolute w-[500px] h-[500px] bg-[#3A3985] rounded-2xl translate-x-[-4px]" />
-
       {/* Main Card */}
-      <div className="relative bg-white rounded-2xl shadow-xl w-[500px] h-[500px] p-6 flex flex-col">
+      <div className="relative border-l-[#3A3985] border-l-4 bg-white rounded-2xl shadow-xl w-[500px] h-[500px] p-6 flex flex-col">
         {/* Logo */}
         <div className="flex justify-center mb-2">
           <img src="/add-user-icon.png" alt="User Logo" className="w-12 h-12" />
