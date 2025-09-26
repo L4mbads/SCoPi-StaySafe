@@ -52,16 +52,35 @@ func (crh *ContractRequestHandler) CreateContractRequest(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Request created successfully",
 		"data": gin.H{
-			"Contract Type":   cr.ContractType,
-			"Company Name":    cr.CompanyName,
-			"Estimated Value": cr.EstimatedValue,
-			"Start Date":      cr.StartDate,
-			"End Date":        cr.EndDate,
-			"Description":     cr.Description,
-			"Priority":        cr.Priority,
-			"Status":          cr.Status,
-			"User ID":         user.ID,
-			"User Name":       user.Name,
+			"Contract Type":       cr.ContractTitle,
+			"Company Name":        cr.CompanyName,
+			"Company Address":     cr.CompanyAddress,
+			"Client Name":         cr.ClientName,
+			"Client Title":        cr.ClientTitle,
+			"Estimated Value":     cr.EstimatedValue,
+			"Start Date":          cr.StartDate,
+			"End Date":            cr.EndDate,
+			"Service Description": cr.ServiceDescription,
+			"Final Deliverables":  cr.FinalDeliverables,
+			"Priority":            cr.Priority,
+			"Status":              cr.Status,
+			"User ID":             user.ID,
+			"User Name":           user.Name,
 		},
+	})
+}
+
+func (crh *ContractRequestHandler) GetAllContractRequests(c *gin.Context) {
+	cr, err := crh.ContractRequestService.GetAllContractRequests()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to fetch contract requests.",
+			"data":    nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get Request success",
+		"data":    cr,
 	})
 }
