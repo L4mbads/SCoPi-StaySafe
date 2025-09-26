@@ -10,7 +10,6 @@ const menuItems = [
   { label: "AI Analysis", icon: "/ai-analyzer-icon.png", path: "/legal/ai_analysis" },
   { label: "Compliance Check", icon: "/check.png", path: "/legal/compliance" },
   { label: "Contract Library", icon: "/books-icon.png", path: "/legal/contract-library" },
-  { label: "Legal Report", icon: "/legal-icon.png", path: "/legal/legal-report" },
 ];
 
 const profileItems = [{ label: "My Profile", icon: "/people-icon.png", path: "/legal/profile" }];
