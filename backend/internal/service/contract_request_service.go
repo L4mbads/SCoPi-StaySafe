@@ -9,6 +9,7 @@ import (
 
 type ContractRequestService struct {
 	ContractRequestRepository repository.ContractRequestRepository
+	DraftRequestService       DraftRequestService
 }
 
 func NewContractRequestService(db *gorm.DB) *ContractRequestService {
@@ -19,15 +20,19 @@ func NewContractRequestService(db *gorm.DB) *ContractRequestService {
 
 func (crs *ContractRequestService) CreateContractRequest(input model.CreateContractRequest, userID uint) (*model.ContractRequest, error) {
 	cr := model.ContractRequest{
-		ContractType:   input.ContractType,
-		CompanyName:    input.CompanyName,
-		EstimatedValue: input.EstimatedContractValue,
-		StartDate:      input.StartDate,
-		EndDate:        input.EndDate,
-		Description:    input.Description,
-		Priority:       input.Priority,
-		UserID:         userID,
-		Status:         model.StatusPending,
+		ContractTitle:      input.ContractTitle,
+		CompanyName:        input.CompanyName,
+		CompanyAddress:     input.CompanyAddress,
+		ClientName:         input.ClientName,
+		ClientTitle:        input.ClientTitle,
+		EstimatedValue:     input.EstimatedContractValue,
+		StartDate:          input.StartDate,
+		EndDate:            input.EndDate,
+		ServiceDescription: input.ServiceDescription,
+		FinalDeliverables:  input.FinalDeliverables,
+		Priority:           input.Priority,
+		UserID:             userID,
+		Status:             model.StatusPending,
 	}
 
 	if err := crs.ContractRequestRepository.Create(&cr); err != nil {
@@ -39,4 +44,8 @@ func (crs *ContractRequestService) CreateContractRequest(input model.CreateContr
 
 func (crs *ContractRequestService) GetAllContractRequests() ([]*model.ContractRequest, error) {
 	return crs.ContractRequestRepository.GetAllContractRequests()
+}
+
+func (crs *ContractRequestService) GetContractRequestByID(id uint) (*model.ContractRequest, error) {
+	return crs.ContractRequestRepository.GetContractRequestByID(id)
 }

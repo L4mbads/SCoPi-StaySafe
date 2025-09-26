@@ -96,14 +96,18 @@ func (s *ContractRequestStatus) UnmarshalJSON(data []byte) error {
 
 type ContractRequest struct {
 	gorm.Model
-	ContractType   string                `json:"contract_type"`
-	CompanyName    string                `json:"company_name"`
-	EstimatedValue float64               `json:"estimated_value"`
-	StartDate      time.Time             `json:"start_date"`
-	EndDate        time.Time             `json:"end_date"`
-	Description    string                `json:"description"`
-	Priority       PriorityLevel         `json:"priority"`
-	Status         ContractRequestStatus `json:contract_request_status`
-	UserID         uint                  `json:"user_id"` // Foreign key for User
-	User           User                  `gorm:"foreignKey:UserID" json:"user"`
+	ContractTitle      string                `json:"contract_title"`
+	CompanyName        string                `json:"company_name"`
+	CompanyAddress     string                `json:"company_address"`
+	ClientName         string                `json:"client_name"`
+	ClientTitle        string                `json:"client_title"`
+	EstimatedValue     float64               `json:"estimated_value"`
+	StartDate          time.Time             `json:"start_date"`
+	EndDate            time.Time             `json:"end_date"`
+	ServiceDescription string                `json:"service_description"`
+	FinalDeliverables  string                `json:"final_deliverables"`
+	Priority           PriorityLevel         `json:"priority"`
+	Status             ContractRequestStatus `json:"contract_request_status"`
+	UserID             uint                  `json:"user_id"` // Foreign key for User
+	User               User                  `gorm:"foreignKey:UserID" json:"user"`
 }

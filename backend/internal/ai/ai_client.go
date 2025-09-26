@@ -33,7 +33,7 @@ func ConnectAI() error {
 }
 
 func (c *AIClient) GenerateContent(ctx context.Context, model string, prompt string) (string, error) {
-	thinkingBudgetVal := int32(0)
+	thinkingBudgetVal := int32(512)
 	resp, err := c.Client.Models.GenerateContent(ctx, model, genai.Text(prompt), &genai.GenerateContentConfig{
 		ThinkingConfig: &genai.ThinkingConfig{
 			ThinkingBudget: &thinkingBudgetVal,

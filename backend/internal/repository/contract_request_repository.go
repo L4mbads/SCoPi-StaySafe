@@ -27,3 +27,12 @@ func (r *ContractRequestRepository) GetAllContractRequests() ([]*model.ContractR
 	}
 	return cr, nil
 }
+
+func (r *ContractRequestRepository) GetContractRequestByID(id uint) (*model.ContractRequest, error) {
+	var cr model.ContractRequest
+	err := r.DB.Where("ID = ?", id).First(&cr).Error
+	if err != nil {
+		return nil, err
+	}
+	return &cr, nil
+}
