@@ -10,82 +10,94 @@ export default function UserMyContract() {
       <div className="flex pt-26">
         {/* Sidebar */}
         <UserSideBar />
+
         {/* Main Content */}
-        <div className="flex-1 p-6 pl-[15em]">
+        <div className="flex-1 pl-[19vw] p-6">
           {/* Header */}
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-[#3A3985]">My Dashboard</h1>
-              <p className="text-sm text-[#3499FF]">
-                Welcome, <span className="font-semibold italic">User!</span> Here&apos;s your contract summary.
-              </p>
-            </div>
-            <div className="flex items-center gap-2"></div>
+          <div>
+            <h1 className="text-2xl font-bold text-[#3A3985]">My Contract</h1>
+            <p className="text-sm text-[#3499FF]">Role-based access control system</p>
           </div>
 
-          {/* Dashboard Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <div className="p-6 bg-white shadow rounded-2xl text-center border-l-4 border-l-[#3B82F6]">
-              <h2 className="text-sm text-[#3A3985]">My Contract</h2>
-              <p className="text-2xl font-bold text-[#3A3985]">4</p>
-            </div>
-            <div className="p-6 bg-white shadow rounded-2xl text-center border-l-4 border-l-[#FACC15]">
-              <h2 className="text-sm text-[#3A3985]">Pending Request</h2>
-              <p className="text-2xl font-bold text-[#3A3985]">2</p>
-            </div>
-            <div className="p-6 bg-white shadow rounded-2xl text-center border-l-4 border-l-[#22C55E]">
-              <h2 className="text-sm text-[#3A3985]">Done this Month</h2>
-              <p className="text-2xl font-bold text-[#3A3985]">1</p>
+          {/* Search Section */}
+          <div className="bg-white shadow rounded-2xl p-6 mt-6 flex flex-col gap-6">
+            {/* Labels */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm font-medium text-[#3A3985]">
+              <p>Estimated Contract Value</p>
+              <p>Start Date</p>
+              <p>End Date</p>
             </div>
 
-            <div className="p-6 bg-white shadow rounded-2xl text-center border-l-4 border-l-[#EF4444]">
-              <h2 className="text-sm text-[#3A3985]">My Contract</h2>
-              <p className="text-2xl font-bold text-[#3A3985]">1</p>
-            </div>
-          </div>
+            {/* Inputs */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <input
+                type="text"
+                placeholder="Search Contracts"
+                className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]"
+              />
+              <select className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]">
+                <option value="">Status</option>
+                <option value="active">Active</option>
+                <option value="expired">Expired</option>
+              </select>
+              <select className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]">
+                <option value="">Type</option>
+                <option value="supplier">Supplier Contracts</option>
+                <option value="service">Service Contracts</option>
+              </select>
 
-          {/* Notification */}
-          <div className="bg-white shadow rounded-2xl p-4 mt-6">
-            <h2 className="font-semibold text-lg mb-4 text-[#3A3985]">My Notification</h2>
-            <div className="bg-green-100 border-l-4 border-green-500 p-3 mb-3 rounded">
-              <p className="font-semibold text-black">Your supplier contract was approved</p>
-              <p className="text-sm text-gray-600">Legal team completed the review.</p>
-            </div>
-            <div className="bg-yellow-100 border-l-4 border-yellow-500 p-3 rounded">
-              <p className="font-semibold text-black">Your IT service contract will expire in 15 days</p>
-              <p className="text-sm text-gray-600">Please request extension if necessary.</p>
+              {/* Button */}
+              <div className="flex justify-end">
+                <button className="bg-[#3499FF] hover:bg-[#277ddf] transition text-white px-6 py-2 rounded-lg flex items-center gap-2 shadow w-9999">
+                  🔍 Search
+                </button>
+              </div>  
             </div>
           </div>
 
-          {/* My Activity */}
-          <div className="bg-white shadow rounded-2xl p-4 mt-6">
-            <h2 className="font-semibold text-lg mb-4 text-[#3A3985]">My Activity</h2>
+          {/* Contract List */}
+          <div className="bg-white shadow rounded-2xl mt-6 p-4">
+            <h2 className="font-semibold text-lg mb-4 text-[#3A3985]">My Contract List</h2>
 
-            <ul className="space-y-4">
-              <li className="flex items-start space-x-3">
-                <span className="w-3 h-3 bg-green-500 rounded-full mt-1"></span>
-                <div>
-                  <p className="text-gray-800">IT service contract request approved by legal team</p>
-                  <p className="text-sm text-gray-500">2 hour ago</p>
-                </div>
-              </li>
-
-              <li className="flex items-start space-x-3">
-                <span className="w-3 h-3 bg-blue-500 rounded-full mt-1"></span>
-                <div>
-                  <p className="text-gray-800">Submitted new supplier contract application</p>
-                  <p className="text-sm text-gray-500">2 hour ago</p>
-                </div>
-              </li>
-
-              <li className="flex items-start space-x-3">
-                <span className="w-3 h-3 bg-yellow-500 rounded-full mt-1"></span>
-                <div>
-                  <p className="text-gray-800">Received contract extension notification</p>
-                  <p className="text-sm text-gray-500">2 hour ago</p>
-                </div>
-              </li>
-            </ul>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gray-100 text-sm text-gray-600">
+                  <th className="p-3">Contract Name</th>
+                  <th className="p-3">Company</th>
+                  <th className="p-3">Start Date</th>
+                  <th className="p-3">End Date</th>
+                  <th className="p-3">Value</th>
+                  <th className="p-3">Status</th>
+                  <th className="p-3">Action</th>
+                </tr>
+              </thead>
+              <tbody className="text-black">
+                <tr className="border-t">
+                  <td className="p-3">Supplier Contracts</td>
+                  <td className="p-3">PT. Office Supply</td>
+                  <td className="p-3">Sep 15, 2024</td>
+                  <td className="p-3">Jun 15, 2025</td>
+                  <td className="p-3">Rp 800 M</td>
+                  <td className="p-3 text-green-600">Active</td>
+                  <td className="p-3 flex gap-2">
+                    <button className="text-blue-500">👁️</button>
+                    <button className="text-green-500">⬇️</button>
+                  </td>
+                </tr>
+                <tr className="border-t">
+                  <td className="p-3">Service Contracts</td>
+                  <td className="p-3">PT. Tech Solutions</td>
+                  <td className="p-3">Sep 5, 2025</td>
+                  <td className="p-3">Jun 5, 2025</td>
+                  <td className="p-3">Rp 2 B</td>
+                  <td className="p-3 text-green-600">Active</td>
+                  <td className="p-3 flex gap-2">
+                    <button className="text-blue-500">👁️</button>
+                    <button className="text-green-500">⬇️</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
