@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Backend Service (Golang)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: scopi-backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DB_HOST=db
+      - DB_USER=scopi_user
+      - DB_PASSWORD=scopi_password
+      - DB_NAME=scopi_db
+      - DB_PORT=5432
+    depends_on:
+      - db
+
+  # Frontend Service (Next.js)
+  # frontend:
+  #   # A placeholder for the frontend service. You will need to create a Next.js Dockerfile
+  #   # and configure this service accordingly. For this initial setup, we will use a simple nginx container.
+  #   # In a real project, you would build the Next.js app and serve it.
+  #   image: nginx:alpine
+  #   container_name: scopi-frontend
+  #   ports:
+  #     - "3000:80"
+  #   volumes:
+  #     - ./frontend/app/admin:/usr/share/nginx/html # Serve the HTML file directly for demonstration
+
+  # Database Service (PostgreSQL)
+  db:
+    image: postgres:alpine
+    container_name: scopi-db
+    environment:
+      POSTGRES_USER: scopi_user
+      POSTGRES_PASSWORD: scopi_password
+      POSTGRES_DB: scopi_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - scopi_data:/var/lib/postgresql/data
+
+volumes:
+  scopi_data:

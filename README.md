@@ -1,1 +1,1 @@
-SCoPi
+# SCoPi: Smart Contract Co-pilot
