@@ -2,7 +2,6 @@ package route
 
 import (
 	"SCoPi-backend/internal/handler"
-	"SCoPi-backend/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -27,8 +26,12 @@ func registerAuthRoutes(api *gin.RouterGroup, authHandler *handler.AuthHandler) 
 
 func registerUserRoutes(api *gin.RouterGroup, userHandler *handler.UserHandler) {
 	users := api.Group("/users")
-	users.Use(middleware.RequireAuth)
+	// users.Use(middleware.RequireAuth)
 	{
+		users.GET("/", userHandler.GetAllUsers)
+		users.GET("/:id", userHandler.GetUserByID)
 		users.POST("/", userHandler.CreateUser)
+		users.PUT("/:id", userHandler.UpdateUser)
+		users.DELETE("/:id", userHandler.DeleteUser)
 	}
 }

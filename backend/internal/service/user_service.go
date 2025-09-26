@@ -61,6 +61,32 @@ func (s *UserService) CreateDefaultAdmin() {
 	log.Println("Default admin user created successfully.")
 }
 
+func (s *UserService) UpdateUser(id uint, newName, newEmail, newRole string) error {
+	user, err := s.UserRepository.FindById(id)
+	if err != nil {
+		return err
+	}
+
+	user.Email = newEmail
+	user.Role = newRole
+	user.Name = newName
+
+	return s.UserRepository.SaveUser(user)
+
+}
+
+func (s *UserService) GetAllUsers() ([]*model.User, error) {
+	return s.UserRepository.GetAllUsers()
+}
+
+func (s *UserService) GetUserByEmail(email string) (*model.User, error) {
+	return s.UserRepository.FindByEmail(email)
+}
+
+func (s *UserService) GetUserByID(id uint) (*model.User, error) {
+	return s.UserRepository.FindById(id)
+}
+
 func (s *UserService) DeleteUser(id uint) error {
 	return s.UserRepository.DeleteUser(id)
 }
