@@ -30,3 +30,12 @@ func (ur *UserRepository) DeleteUser(id uint) error {
 	result := ur.DB.Delete(&model.User{}, id)
 	return result.Error
 }
+
+func (ur *UserRepository) FindByEmail(email string) (*model.User, error) {
+	var user model.User
+	err := ur.DB.Where("Email = ?", email).First(&user).Error
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
