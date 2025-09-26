@@ -65,3 +65,18 @@ func (crh *ContractRequestHandler) CreateContractRequest(c *gin.Context) {
 		},
 	})
 }
+
+func (crh *ContractRequestHandler) GetAllContractRequests(c *gin.Context) {
+	cr, err := crh.ContractRequestService.GetAllContractRequests()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to fetch contract requests.",
+			"data":    nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get Request success",
+		"data":    cr,
+	})
+}

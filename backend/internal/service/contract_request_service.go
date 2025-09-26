@@ -36,3 +36,7 @@ func (crs *ContractRequestService) CreateContractRequest(input model.CreateContr
 
 	return &cr, nil
 }
+
+func (crs *ContractRequestService) GetAllContractRequests() ([]*model.ContractRequest, error) {
+	return crs.ContractRequestRepository.GetAllContractRequests()
+}

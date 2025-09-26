@@ -19,3 +19,11 @@ func NewContractRequestRepository(db *gorm.DB) *ContractRequestRepository {
 func (r *ContractRequestRepository) Create(contractRequest *model.ContractRequest) error {
 	return r.DB.Create(contractRequest).Error
 }
+
+func (r *ContractRequestRepository) GetAllContractRequests() ([]*model.ContractRequest, error) {
+	var cr []*model.ContractRequest
+	if err := r.DB.Find(&cr).Error; err != nil {
+		return nil, err
+	}
+	return cr, nil
+}
