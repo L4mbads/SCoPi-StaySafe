@@ -1,113 +1,105 @@
-import LandingPage from "@/components/landingpage";
+import Navbar from "@/components/landingpage"; // Assuming this is your Navbar
 import UserSideBar from "@/components/user_sidebar";
+import Image from "next/image"; // Import Image for action icons
 
 export default function UserMyContract() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <LandingPage />
+    // 1. Set the root container to be a flex column
+    <div className="flex min-h-screen flex-col bg-gray-100">
+      <Navbar />
 
-      <div className="flex pt-26">
-        {/* Sidebar */}
+      {/* 2. Make this container grow to fill the remaining vertical space */}
+      <div className="flex flex-1">
         <UserSideBar />
 
-        {/* Main Content */}
-        <div className="flex-1 pl-[19vw] p-6">
+        {/* 3. Use a <main> tag and standard padding */}
+        <main className="flex-1 p-8 overflow-y-auto">
           {/* Header */}
-          <div>
-            <h1 className="text-2xl font-bold text-[#3A3985]">My Contract</h1>
-            <p className="text-sm text-[#3499FF]">Role-based access control system</p>
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-[#3A3985]">My Contracts</h1>
+            <p className="text-gray-500 mt-2">View, search, and manage your contracts.</p>
           </div>
 
           {/* Search Section */}
-          <div className="bg-white shadow rounded-2xl p-6 mt-6 flex flex-col gap-2">
-            {/* Labels */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm font-medium text-[#3A3985]">
-              <p>Estimated Contract Value</p>
-              <p>Status</p>
-              <p>Type</p>
-            </div>
-
-            {/* Inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <input
-                type="text"
-                placeholder="Search Contracts"
-                className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]"
-              />
-              <select className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]">
-                <option value="">Status</option>
-                <option value="active">Active</option>
-                <option value="expired">Expired</option>
-              </select>
-              <select className="border border-gray-300 rounded-lg px-4 py-2 flex-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#3499FF]">
-                <option value="">Type</option>
-                <option value="supplier">Supplier Contracts</option>
-                <option value="service">Service Contracts</option>
-              </select>
-
-              {/* Button */}
-              <div className="flex justify-end">
-                <button className="bg-[#3499FF] hover:bg-[#277ddf] transition text-white px-6 py-2 rounded-lg flex items-center gap-2 shadow w-9999">
-                  🔍 Search
-                </button>
-              </div>  
+          <div className="bg-white shadow-md rounded-xl p-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Contract Value</label>
+                <input
+                  type="text"
+                  placeholder="e.g., > 10000"
+                  className="w-full border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <select className="w-full border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-blue-500 focus:border-blue-500">
+                  <option>All Statuses</option>
+                  <option>Active</option>
+                  <option>Expired</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                <select className="w-full border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-blue-500 focus:border-blue-500">
+                  <option>All Types</option>
+                  <option>Supplier</option>
+                  <option>Service</option>
+                </select>
+              </div>
+              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">
+                Search
+              </button>
             </div>
           </div>
 
           {/* Contract List */}
-          <div className="bg-white shadow rounded-2xl mt-6 p-4">
-            <h2 className="font-semibold text-lg mb-4 text-[#3A3985]">My Contract List</h2>
-
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-gray-100 text-sm text-gray-600">
-                  <th className="p-3">Contract Name</th>
-                  <th className="p-3">Company</th>
-                  <th className="p-3">Start Date</th>
-                  <th className="p-3">End Date</th>
-                  <th className="p-3">Value</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3">Action</th>
+          <div className="bg-white shadow-md rounded-xl mt-8 overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Contract Name</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Company</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Start Date</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">End Date</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Value</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
+                  <th className="p-4 text-sm font-semibold text-gray-600">Actions</th>
                 </tr>
               </thead>
-              <tbody className="text-black">
-                <tr className="border-t">
-                  <td className="p-3">Supplier Contracts</td>
-                  <td className="p-3">PT. Office Supply</td>
-                  <td className="p-3">Sep 15, 2024</td>
-                  <td className="p-3">Jun 15, 2025</td>
-                  <td className="p-3">Rp 800 M</td>
-                  <td className="p-3 text-green-600">Active</td>
-                  <td className="p-3 flex gap-2">
-                  <button className="group">
-                    <img src="/eye-icon.png" alt="View" className="w-5 group-hover:brightness-75 transition" />
-                  </button>
-                  <button className="group">
-                    <img src="/download-icon.png" alt="Download" className="w-5 h-5 group-hover:brightness-75 transition" />
-                  </button>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50">
+                  <td className="p-4 text-gray-800">Supplier Contract</td>
+                  <td className="p-4 text-gray-800">PT. Office Supply</td>
+                  <td className="p-4 text-gray-800">Sep 15, 2024</td>
+                  <td className="p-4 text-gray-800">Jun 15, 2025</td>
+                  <td className="p-4 text-gray-800">Rp 800 M</td>
+                  <td className="p-4">
+                    <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">Active</span>
+                  </td>
+                  <td className="p-4 flex gap-4">
+                    <button><Image src="/eye-icon.png" alt="View" width={20} height={20} /></button>
+                    <button><Image src="/download-icon.png" alt="Download" width={20} height={20} /></button>
                   </td>
                 </tr>
-                <tr className="border-t">
-                  <td className="p-3">Service Contracts</td>
-                  <td className="p-3">PT. Tech Solutions</td>
-                  <td className="p-3">Sep 5, 2025</td>
-                  <td className="p-3">Jun 5, 2025</td>
-                  <td className="p-3">Rp 2 B</td>
-                  <td className="p-3 text-green-600">Active</td>
-                  <td className="p-3 flex gap-2">
-                  <button className="group">
-                    <img src="/eye-icon.png" alt="View" className="w-5 group-hover:brightness-75 transition" />
-                  </button>
-                  <button className="group">
-                    <img src="/download-icon.png" alt="Download" className="w-5 h-5 group-hover:brightness-75 transition" />
-                  </button>
+                <tr className="hover:bg-gray-50">
+                  <td className="p-4 text-gray-800">Service Contract</td>
+                  <td className="p-4 text-gray-800">PT. Tech Solutions</td>
+                  <td className="p-4 text-gray-800">Sep 5, 2025</td>
+                  <td className="p-4 text-gray-800">Jun 5, 2025</td>
+                  <td className="p-4 text-gray-800">Rp 2 B</td>
+                   <td className="p-4">
+                    <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">Active</span>
+                  </td>
+                  <td className="p-4 flex gap-4">
+                    <button><Image src="/eye-icon.png" alt="View" width={20} height={20} /></button>
+                    <button><Image src="/download-icon.png" alt="Download" width={20} height={20} /></button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
