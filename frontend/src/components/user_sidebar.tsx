@@ -8,7 +8,7 @@ import Image from "next/image";
 const menuItems = [
   { label: "Dashboard", icon: "/dashboard-icon.png", path: "/user/dashboard" },
   { label: "Contract Request", icon: "/contract-req-icon.png", path: "/user/contract_request" },
-  { label: "My Contract", icon: "/my-contract-icon.png", path: "/user/my-contract" },
+  { label: "My Contract", icon: "/my-contract-icon.png", path: "/user/my_contract" },
   { label: "Notification", icon: "/notif-icon.png", path: "/user/notification" },
 ];
 
