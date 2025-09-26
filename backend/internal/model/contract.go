@@ -59,3 +59,31 @@ type Contract struct {
 	UserID   uint           `json:"user_id"` // Foreign key for User
 	User     User           `gorm:"foreignKey:UserID" json:"user"`
 }
+
+type ContractAnalysis struct {
+	ComplianceReport ComplianceReport `json:"compliance_report"`
+}
+
+type ComplianceReport struct {
+	GovernmentRegulations ComplianceCategory `json:"government_regulations"`
+	InternalStandards     ComplianceCategory `json:"internal_standards"`
+	RiskAssessments       ComplianceCategory `json:"risk_assessments"`
+}
+
+type ComplianceCategory struct {
+	Summary        ComplianceSummary `json:"summary"`
+	HighRiskIssues []ComplianceIssue `json:"high_risk_issues"`
+	LowRiskIssues  []ComplianceIssue `json:"low_risk_issues"`
+}
+
+type ComplianceSummary struct {
+	TotalClausesNeedingAdjustment int `json:"total_clauses_needing_adjustment"`
+	HighRiskCount                 int `json:"high_risk_count"`
+	LowRiskCount                  int `json:"low_risk_count"`
+}
+
+type ComplianceIssue struct {
+	ClauseReference  string `json:"clause_reference"`
+	IssueDescription string `json:"issue_description"`
+	Recommendation   string `json:"recommendation"`
+}

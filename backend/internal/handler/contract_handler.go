@@ -109,3 +109,23 @@ func (h *ContractHandler) DeleteContract(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Contract deleted successfully"})
 }
+
+func (h *ContractHandler) AnalyzeContract(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid contract ID"})
+		return
+	}
+
+	analysis, err := h.ContractService.AnalyzeContract(c.Request.Context(), uint(id))
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Contract not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, analysis)
+}
