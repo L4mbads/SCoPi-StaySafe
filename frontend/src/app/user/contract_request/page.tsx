@@ -2,7 +2,6 @@
 
 import LandingPage from "@/components/landingpage";
 import UserSideBar from "@/components/user_sidebar";
-
 import { useState } from "react";
 
 export default function UserContractRequest() {
@@ -17,14 +16,16 @@ export default function UserContractRequest() {
     end_date: "",
     service_description: "",
     final_deliverables: "",
-    priority: "low", // Default priority
+    priority: "low",
   });
 
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  // Handle input changes
-  const handleChange = (e) => {
+  // Handle input changes (NO CHANGES HERE)
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -32,8 +33,8 @@ export default function UserContractRequest() {
     }));
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
+  // Handle form submission (NO CHANGES HERE)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
@@ -47,9 +48,9 @@ export default function UserContractRequest() {
         credentials: "include",
         body: JSON.stringify({
           ...formData,
-          estimated_contract_value: parseFloat(formData.estimated_contract_value), // Ensure it's a number
-          start_date: new Date(formData.start_date).toISOString(), // Convert to ISO string
-          end_date: new Date(formData.end_date).toISOString(), // Convert to ISO string
+          estimated_contract_value: parseFloat(formData.estimated_contract_value),
+          start_date: new Date(formData.start_date).toISOString(),
+          end_date: new Date(formData.end_date).toISOString(),
         }),
       });
 
@@ -72,175 +73,174 @@ export default function UserContractRequest() {
         priority: "low",
       });
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="flex min-h-screen flex-col bg-gray-100">
       {/* Navbar */}
       <LandingPage />
 
-      <div className="flex">
+      <div className="flex flex-1">
         {/* Sidebar */}
         <UserSideBar />
+        
         {/* Main Content */}
-        <div className="flex-1 p-6 pt-3">
+        <main className="flex-1 p-6 overflow-y-auto">
           {/* Contract Requests Header */}
-          <div className="p-1">
-            <h2 className="text-xl font-bold text-[#3A3985]">Contract Requests</h2>
-            <p className="text-sm text-[#3499FF]">Submit a new draft contract request with AI</p>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>{success}</p>}
-            {/* Create New Request Form */}
-            <div className="mt-4 bg-white p-4 rounded-lg shadow-inner">
-              <h3 className="font-semibold text-[#3A3985] mb-4">Create New Request</h3>
-              <form
-              onSubmit={handleSubmit}
-              className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <p className="text-[#3A3985]">Contract Title</p>
-                  <p className="text-[#3A3985]">Company Name</p>
+          <div>
+            <h2 className="text-2xl font-bold text-[#3A3985]">Contract Request</h2>
+            <p className="text-sm text-gray-500 mt-1">Submit a new draft contract request with AI</p>
+            {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+            {success && <p className="mt-2 text-sm text-green-600">{success}</p>}
+          </div>
+
+          {/* Create New Request Form */}
+          <div className="mt-6 bg-white p-6 rounded-xl shadow-md">
+            <h3 className="text-lg font-semibold text-[#3A3985] mb-4">Create New Request</h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                {/* A better way to structure labels and inputs */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Contract Title</label>
+                  <input
+                    type="text"
+                    name="contract_title"
+                    value={formData.contract_title}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text"
-                  name="contract_title"
-                  value={formData.contract_title}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="text"
-                  name="company_name"
-                  value={formData.company_name}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Company Name</label>
+                  <input
+                    type="text"
+                    name="company_name"
+                    value={formData.company_name}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <p className="text-[#3A3985]">Estimated Contract Value</p>
-                  <p className="text-[#3A3985]">Company Address</p>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Estimated Contract Value</label>
+                   <input
+                    type="number"
+                    name="estimated_contract_value"
+                    value={formData.estimated_contract_value}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text"
-                  name="estimated_contract_value"
-                  value={formData.estimated_contract_value}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="text"
-                  name="company_address"
-                  value={formData.company_address}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Company Address</label>
+                  <input
+                    type="text"
+                    name="company_address"
+                    value={formData.company_address}
+                    onChange={handleChange}
+                    required
+                    className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                  />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <p className="text-[#3A3985]">Start Date</p>
-                  <p className="text-[#3A3985]">End Date</p>
-                  <p className="text-[#3A3985]">Client Name</p>
-                  <p className="text-[#3A3985]">Client Title</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Start Date</label>
+                  <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} required className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <input type="date"
-                  name="start_date"
-                  value={formData.start_date}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="date"
-                  name="end_date"
-                  value={formData.end_date}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="text"
-                  name="client_name"
-                  value={formData.client_name}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="text"
-                  name="client_title"
-                  value={formData.client_title}
-                  onChange={handleChange}
-                  required
-                  className="border rounded-lg p-2 w-full text-gray-900" />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">End Date</label>
+                  <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} required className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <p className="text-[#3A3985]">Service Description</p>
-                  <p className="text-[#3A3985]">Final Delivery</p>
+                 <div>
+                  <label className="block text-sm font-medium text-gray-700">Client Name</label>
+                  <input type="text" name="client_name" value={formData.client_name} onChange={handleChange} required className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <textarea
-                  name="service_description"
-                  value={formData.service_description}
-                  onChange={handleChange}
-                  required
-                  placeholder="Type description" className="border rounded-lg p-2 w-full h-24 text-gray-900"></textarea>
-                  <textarea
-                  name="final_deliverables"
-                  value={formData.final_deliverables}
-                  onChange={handleChange}
-                  placeholder="Type final delivery" className="border rounded-lg p-2 w-full h-24 text-gray-900"></textarea>
+                 <div>
+                  <label className="block text-sm font-medium text-gray-700">Client Title</label>
+                  <input type="text" name="client_title" value={formData.client_title} onChange={handleChange} required className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <p className="text-[#3A3985]">Priority</p>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                 <div>
+                  <label className="block text-sm font-medium text-gray-700">Service Description</label>
+                  <textarea name="service_description" value={formData.service_description} onChange={handleChange} required placeholder="Type description" className="mt-1 border rounded-lg p-2 w-full h-24 text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
                 </div>
-                <select
-                name="priority"
-                value={formData.priority}
-                onChange={handleChange}
-                className="w-full border rounded px-3 py-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                  <option value="" disabled className="bg-blue-600 text-white">Pilih prioritas</option>
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-[#3A3985] to-[#3499FF] text-white font-semibold py-2 rounded-lg">
-                  Send
-                </button>
-              </form>
-            </div>
+                 <div>
+                  <label className="block text-sm font-medium text-gray-700">Final Deliverables</label>
+                  <textarea name="final_deliverables" value={formData.final_deliverables} onChange={handleChange} placeholder="Type final delivery" className="mt-1 border rounded-lg p-2 w-full h-24 text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+              </div>
+
+               <div>
+                  <label className="block text-sm font-medium text-gray-700">Priority</label>
+                  <select name="priority" value={formData.priority} onChange={handleChange} className="mt-1 w-full border rounded-lg px-3 py-2 bg-white text-gray-900 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#3A3985] to-[#3499FF] text-white font-semibold py-2.5 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Send Request
+              </button>
+            </form>
           </div>
 
           {/* Request History */}
-          <div className="bg-white shadow rounded-2xl p-6 mt-6 border border-blue-300">
+          <div className="bg-white shadow-md rounded-xl p-6 mt-8">
             <h3 className="font-semibold text-lg text-[#3A3985] mb-4">My Request History</h3>
-            <table className="w-full te xt-sm text-left border-collapse">
-              <thead className="text-[#3A3985] border-b">
-                <tr>
-                  <th className="p-2">Date</th>
-                  <th className="p-2">Contract Type</th>
-                  <th className="p-2">Company</th>
-                  <th className="p-2">Value</th>
-                  <th className="p-2">Status</th>
-                </tr>
-              </thead>
-              <tbody className="text-black">
-                <tr className="border-b">
-                  <td className="p-2">Sep 15, 2024</td>
-                  <td className="p-2">Supplier Contracts</td>
-                  <td className="p-2">PT. Tech Solutions</td>
-                  <td className="p-2">Rp 800 M</td>
-                  <td className="p-2">Legal Team Review</td>
-                  <td className="p-2 flex gap-2">
-                  </td>
-                </tr>
-                <tr>
-                  <td className="p-2">Sep 5, 2025</td>
-                  <td className="p-2">Service Contracts</td>
-                  <td className="p-2">CV. Maju Bersama</td>
-                  <td className="p-2">Rp 2 B</td>
-                  <td className="p-2">Approved</td>
-                  <td className="p-2 flex gap-2">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                    <th className="p-3">Date</th>
+                    <th className="p-3">Contract Type</th>
+                    <th className="p-3">Company</th>
+                    <th className="p-3">Value</th>
+                    <th className="p-3">Status</th>
+                    </tr>
+                </thead>
+                <tbody className="text-gray-800">
+                    <tr className="border-b hover:bg-gray-50">
+                    <td className="p-3">Sep 15, 2024</td>
+                    <td className="p-3">Supplier Contracts</td>
+                    <td className="p-3">PT. Tech Solutions</td>
+                    <td className="p-3">Rp 800 M</td>
+                    <td className="p-3">
+                        <span className="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full">
+                        Legal Team Review
+                        </span>
+                    </td>
+                    </tr>
+                    <tr className="hover:bg-gray-50">
+                    <td className="p-3">Sep 5, 2025</td>
+                    <td className="p-3">Service Contracts</td>
+                    <td className="p-3">CV. Maju Bersama</td>
+                    <td className="p-3">Rp 2 B</td>
+                    <td className="p-3">
+                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">
+                        Approved
+                        </span>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
