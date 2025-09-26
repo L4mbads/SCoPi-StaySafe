@@ -44,7 +44,7 @@ export default function AdminCreate() {
         if (response.ok) {
           const data = await response.json();
           console.log(data.message);
-          router.push("/admin"); // Redirect to the home page on success
+          router.push("/admin/home"); // Redirect to the home page on success
         } else {
           // If login failed, get the error message from the response
           const errorData = await response.json();
@@ -112,10 +112,10 @@ export default function AdminCreate() {
               className="w-full border rounded-md px-2 py-1 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               <option value="">-- Select Role --</option>
-              <option value="internal">Associate</option>
-              <option value="admin">Administrator</option>
-              <option value="legal">Legal Associate</option>
-              <option value="executive">Executive</option>
+              <option value="Internal">Internal</option>
+              <option value="Admin">Administrator</option>
+              <option value="Legal">Legal</option>
+              <option value="Executive">Executive</option>
             </select>
           </div>
 
