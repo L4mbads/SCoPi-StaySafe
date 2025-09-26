@@ -11,7 +11,7 @@ export default function UserContractRequest() {
         {/* Sidebar */}
         <UserSideBar />
         {/* Main Content */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 pl-[15em] p-6 pt-3">
           {/* Contract Requests Header */}
           <div className="p-1">
             <h2 className="text-xl font-bold text-[#3A3985]">Contract Requests</h2>
@@ -22,31 +22,45 @@ export default function UserContractRequest() {
               <h3 className="font-semibold text-[#3A3985] mb-4">Create New Request</h3>
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <p className="text-[#3A3985]">Contract Type</p>
-                  <p className="text-[#3A3985]">Company Name Type</p>
+                  <p className="text-[#3A3985]">Contract Title</p>
+                  <p className="text-[#3A3985]">Company Name</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
                   <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <p className="text-[#3A3985]">Estimated Contract Value</p>
+                  <p className="text-[#3A3985]">Company Address</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
+                  <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <p className="text-[#3A3985]">Start Date</p>
                   <p className="text-[#3A3985]">End Date</p>
+                  <p className="text-[#3A3985]">Client</p>
+                  <p className="text-[#3A3985]">Department</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <input type="date" className="border rounded-lg p-2 w-full text-gray-900" />
+                  <input type="date" className="border rounded-lg p-2 w-full text-gray-900" />
                   <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="date" className="border rounded-lg p-2 w-full text-gray-900" />
-                  <input type="date" className="border rounded-lg p-2 w-full text-gray-900" />
+                  <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-                  <p className="text-[#3A3985]">Description</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <p className="text-[#3A3985]">Service Description</p>
+                  <p className="text-[#3A3985]">Final Delivery</p>
                 </div>
-                <textarea placeholder="Type description" className="border rounded-lg p-2 w-full h-24 text-gray-900"></textarea>
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <textarea placeholder="Type description" className="border rounded-lg p-2 w-full h-24 text-gray-900"></textarea>
+                  <textarea placeholder="Type final delivery" className="border rounded-lg p-2 w-full h-24 text-gray-900"></textarea>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <p className="text-[#3A3985]">Priority</p>
                 </div>
-                <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
+                  <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-[#3A3985] to-[#3499FF] text-white font-semibold py-2 rounded-lg">

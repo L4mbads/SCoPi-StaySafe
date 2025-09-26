@@ -11,7 +11,7 @@ export default function UserMyContract() {
         {/* Sidebar */}
         <UserSideBar />
         {/* Main Content */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 pl-[15em]">
           {/* Header */}
           <div className="flex justify-between items-center">
             <div>

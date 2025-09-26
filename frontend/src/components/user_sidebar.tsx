@@ -36,7 +36,7 @@ export default function UserSideBar() {
           </ul>
         </div>
       </div>
-      <div className="px-6 pb-12 pt-57">
+      <div className="px-6 fixed bottom-5">
         <div className="text-gray-400 text-sm mb-2">Settings</div>
         <ul className="flex flex-col gap-1">
           {profileItems.map((item) => (

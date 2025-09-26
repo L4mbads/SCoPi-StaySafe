@@ -12,7 +12,7 @@ export default function UserNotification() {
         {/* Sidebar */}
         <UserSideBar />
         {/* Main Content */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 pl-[15em] pr-5">
 
           {/* Notification */}
           <UserNotificationComponent/ >
