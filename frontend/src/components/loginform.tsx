@@ -23,6 +23,7 @@ export default function LoginForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        credentials: "include"
       });
 
       // Check if the response is successful

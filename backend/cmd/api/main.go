@@ -25,6 +25,7 @@ func main() {
 
 	authHandler := handler.NewAuthHandler(database.DB)
 	userHandler := handler.NewUserHandler(database.DB)
+	contractRequestHandler := handler.NewContractRequestHandler(database.DB)
 
 	userHandler.UserService.CreateDefaultAdmin()
 	r.Use(cors.New(cors.Config{
@@ -35,6 +36,6 @@ func main() {
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
 	}))
-	route.RegisterRoutes(r, authHandler, userHandler)
+	route.RegisterRoutes(r, authHandler, userHandler, contractRequestHandler)
 	r.Run(":8080")
 }

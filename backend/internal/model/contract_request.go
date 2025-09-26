@@ -40,12 +40,13 @@ func (p *PriorityLevel) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	switch s {
-	case "Low":
+	// Normalize the input string to lowercase
+	switch s := string(s); s {
+	case "low":
 		*p = Low
-	case "Medium":
+	case "medium":
 		*p = Medium
-	case "High":
+	case "high":
 		*p = High
 	default:
 		return fmt.Errorf("invalid priority level: %s", s)

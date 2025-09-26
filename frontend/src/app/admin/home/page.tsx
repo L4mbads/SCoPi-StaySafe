@@ -33,7 +33,9 @@ export default function AdminHome() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/users/");
+        const response = await fetch("http://localhost:8080/api/users/", {
+          credentials: "include",
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
@@ -59,6 +61,7 @@ export default function AdminHome() {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/api/users/${id}`, {
+        credentials: "include",
         method: "DELETE",
       });
 

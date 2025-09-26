@@ -26,11 +26,11 @@ type CreateContractRequest struct {
 	CompanyName            string        `json:"company_name" binding:"required"`
 	CompanyAddress         string        `json:"company_address" binding:"required"`
 	ClientName             string        `json:"client_name" binding:"required"`
-	ClientTitle            string        `json:"client_title"`
-	EstimatedContractValue float64       `json:"estimatedContractValue" binding:"required"`
-	StartDate              time.Time     `json:"startDate" binding:"required"`
-	EndDate                time.Time     `json:"endDate" binding:"required"`
+	ClientTitle            string        `json:"client_title" binding:"required"`
+	EstimatedContractValue float64       `json:"estimated_contract_value" binding:"required"`
+	StartDate              time.Time     `json:"start_date" binding:"required"`
+	EndDate                time.Time     `json:"end_date" binding:"required"`
 	ServiceDescription     string        `json:"service_description" binding:"required"`
-	FinalDeliverables      string        `json:"final_deliverables" binding:"required"`
-	Priority               PriorityLevel `json:"priority" binding:"required,oneof=low medium high"`
+	FinalDeliverables      string        `json:"final_deliverables"`
+	Priority               PriorityLevel `json:"priority" binding:"required"`
 }

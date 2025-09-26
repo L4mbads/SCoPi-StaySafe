@@ -14,15 +14,12 @@ import (
 )
 
 func RequireAuth(c *gin.Context) {
-	var tokenString string
-	var err error
-
-	tokenString, err = c.Cookie("jwt_token")
+	tokenString, err := c.Cookie("Authorization")
 	if err != nil {
 		// if no cookie, eg. from admin FE
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authentication required"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
 		}
 
