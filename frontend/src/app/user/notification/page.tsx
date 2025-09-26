@@ -1,22 +1,18 @@
-import LandingPage from "@/components/landingpage";
+import Navbar from "@/components/landingpage";
 import UserSideBar from "@/components/user_sidebar";
 import UserNotificationComponent from "@/components/user_notification";
 
 export default function UserNotification() {
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
-      <LandingPage />
+    <div className="flex min-h-screen flex-col bg-gray-100">
+      <Navbar />
 
-      <div className="flex pt-26">
-        {/* Sidebar */}
+      <div className="flex flex-1">
         <UserSideBar />
-        {/* Main Content */}
-        <div className="flex-1 pl-[15em] pr-5">
 
-          {/* Notification */}
-          <UserNotificationComponent/ >
-        </div>
+        <main className="flex-1 p-8 overflow-y-auto">
+          <UserNotificationComponent />
+        </main>
       </div>
     </div>
   );

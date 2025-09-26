@@ -7,7 +7,7 @@ import Image from "next/image";
 // Data arrays are unchanged...
 const menuItems = [
   { label: "Dashboard", icon: "/dashboard-icon.png", path: "/user/dashboard" },
-  { label: "Contract Request", icon: "/contract-req-icon.png", path: "/user/contract-request" },
+  { label: "Contract Request", icon: "/contract-req-icon.png", path: "/user/contract_request" },
   { label: "My Contract", icon: "/my-contract-icon.png", path: "/user/my-contract" },
   { label: "Notification", icon: "/notif-icon.png", path: "/user/notification" },
 ];
