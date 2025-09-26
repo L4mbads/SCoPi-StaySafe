@@ -31,6 +31,7 @@ export default function AdminCreate() {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             name,
             email,

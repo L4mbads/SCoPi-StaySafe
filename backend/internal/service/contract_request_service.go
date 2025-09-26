@@ -49,3 +49,7 @@ func (crs *ContractRequestService) GetAllContractRequests() ([]*model.ContractRe
 func (crs *ContractRequestService) GetContractRequestByID(id uint) (*model.ContractRequest, error) {
 	return crs.ContractRequestRepository.GetContractRequestByID(id)
 }
+
+func (crs *ContractRequestService) GetContractRequestsByUserID(id uint) ([]*model.ContractRequest, error) {
+	return crs.ContractRequestRepository.GetContractRequestsByUserID(id)
+}

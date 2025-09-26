@@ -70,6 +70,32 @@ func (crh *ContractRequestHandler) CreateContractRequest(c *gin.Context) {
 	})
 }
 
+func (crh *ContractRequestHandler) GetMyContractRequests(c *gin.Context) {
+
+	userCtx, exists := c.Get("user")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "Make sure you're logged in",
+			"data":    nil,
+		})
+		return
+	}
+
+	user := userCtx.(model.User)
+	cr, err := crh.ContractRequestService.GetContractRequestsByUserID(user.ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to fetch contract requests.",
+			"data":    nil,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Get Request success",
+		"data":    cr,
+	})
+}
+
 func (crh *ContractRequestHandler) GetAllContractRequests(c *gin.Context) {
 	cr, err := crh.ContractRequestService.GetAllContractRequests()
 	if err != nil {

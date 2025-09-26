@@ -45,6 +45,8 @@ func registerContractRequestHandler(api *gin.RouterGroup, contractRequestHandler
 	conreq := api.Group("/contract_request")
 	conreq.Use(middleware.RequireAuth)
 	{
+		conreq.GET("/", contractRequestHandler.GetAllContractRequests)
+		conreq.GET("/self", contractRequestHandler.GetMyContractRequests)
 		conreq.POST("/", contractRequestHandler.CreateContractRequest)
 	}
 }
