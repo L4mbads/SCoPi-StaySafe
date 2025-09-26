@@ -1,0 +1,38 @@
+package service
+
+import (
+	"SCoPi-backend/internal/model"
+	"SCoPi-backend/internal/repository"
+
+	"gorm.io/gorm"
+)
+
+type ContractRequestService struct {
+	ContractRequestRepository repository.ContractRequestRepository
+}
+
+func NewContractRequestService(db *gorm.DB) *ContractRequestService {
+	return &ContractRequestService{
+		ContractRequestRepository: *repository.NewContractRequestRepository(db),
+	}
+}
+
+func (crs *ContractRequestService) CreateContractRequest(input model.CreateContractRequest, userID uint) (*model.ContractRequest, error) {
+	cr := model.ContractRequest{
+		ContractType:   input.ContractType,
+		CompanyName:    input.CompanyName,
+		EstimatedValue: input.EstimatedContractValue,
+		StartDate:      input.StartDate,
+		EndDate:        input.EndDate,
+		Description:    input.Description,
+		Priority:       input.Priority,
+		UserID:         userID,
+		Status:         model.StatusPending,
+	}
+
+	if err := crs.ContractRequestRepository.Create(&cr); err != nil {
+		return nil, err
+	}
+
+	return &cr, nil
+}
