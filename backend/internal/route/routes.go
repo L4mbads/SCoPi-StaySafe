@@ -10,6 +10,8 @@ func RegisterRoutes(
 	r *gin.Engine,
 	authHandler *handler.AuthHandler,
 	userHandler *handler.UserHandler) {
+
+	r.RemoveExtraSlash = true
 	api := r.Group("/api")
 	{
 		registerAuthRoutes(api, authHandler)
