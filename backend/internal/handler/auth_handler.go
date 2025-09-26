@@ -3,6 +3,7 @@ package handler
 import (
 	"SCoPi-backend/internal/model"
 	"SCoPi-backend/internal/service"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -39,8 +40,11 @@ func (ah AuthHandler) LoginUser(c *gin.Context) {
 		return
 	}
 
+	// c.SetSameSite(http.SameSiteLaxMode)
+	fmt.Println(token)
+	// c.SetCookie("Authorization", token, 3600, "/", "", false, true)
 	c.SetSameSite(http.SameSiteLaxMode)
-	c.SetCookie("Authorization", token, 3600, "", "", true, true)
+	c.SetCookie("Authorization", token, 3600*24, "", "", true, true)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Login successful",
 		"data":    nil,
