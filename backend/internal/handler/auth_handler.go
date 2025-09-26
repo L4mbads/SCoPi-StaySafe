@@ -26,17 +26,17 @@ func (ah AuthHandler) LoginUser(c *gin.Context) {
 			gin.H{
 				"message": err.Error(),
 				"data":    nil,
-			},
-		)
+			})
 		return
 	}
 
 	token, err := ah.AuthService.LoginUser(input)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"message": err.Error(),
+			"message": "Email atau password salah.",
 			"data":    nil,
 		})
+		return
 	}
 
 	c.SetSameSite(http.SameSiteLaxMode)

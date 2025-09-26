@@ -1,6 +1,47 @@
+'use client';
+
+import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 
 export default function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const router = useRouter();
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    setError(null); // Clear previous errors
+
+    try {
+      // Make a POST request to the backend login API
+      const response = await fetch('http://localhost:8080/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      // Check if the response is successful
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        router.push('/'); // Redirect to the home page on success
+      } else {
+        // If login failed, get the error message from the response
+        const errorData = await response.json();
+        setError(errorData.message);
+      }
+    } catch (err) {
+      // Handle network or other unexpected errors
+      setError('An error occurred. Please try again later.');
+      console.error('Login error:', err);
+    }
+  };
+
   return (
     <div className="w-full md:w-473/1368 h-screen flex items-center justify-center p-6">
       <div className="max-w-sm w-full space-y-6">
@@ -23,12 +64,14 @@ export default function LoginForm() {
           <p className="text-[#3A3985]">Please enter your details</p>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-[#3A3985]">Email</label>
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 text-gray-900"
             />
           </div>
@@ -38,9 +81,17 @@ export default function LoginForm() {
             <input
               type="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-blue-500 text-gray-900"
             />
           </div>
+
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative text-sm" role="alert">
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
 
           <button
             type="submit"
