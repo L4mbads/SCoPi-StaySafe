@@ -9,7 +9,7 @@ export default function AdminHome() {
       {/* Content with sidebar + main area */}
       <div className="flex pt-26">
         {/* Sidebar */}
-        <aside className="w-64 bg-white shadow-md p-6 fixed ">
+        <aside className="w-64 bg-white shadow-md p-6">
           <div className="flex items-center space-x-2 mb-8">
             <span className="text-indigo-700">
               <svg
