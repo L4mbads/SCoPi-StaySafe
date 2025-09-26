@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const menuItems = [
   { label: "Dashboard", icon: "/dashboard-icon.png", path: "/legal/dashboard" },
-  { label: "Review Queue", icon: "/contract-req-icon.png", path: "/legal/review-queue" },
+  { label: "Review Queue", icon: "/contract-req-icon.png", path: "/legal/review" },
   { label: "AI Analysis", icon: "/my-contract-icon.png", path: "/legal/ai_analysis" },
   { label: "Compliance Check", icon: "/notif-icon.png", path: "/legal/compliance" },
   { label: "Contract Library", icon: "/notif-icon.png", path: "/legal/contract-library" },
