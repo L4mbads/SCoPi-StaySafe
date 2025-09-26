@@ -154,7 +154,7 @@ export default function IntegrationGateway() {
               <input
                 type="text"
                 defaultValue="http://api.scopi.company.com"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-[#3499FF] focus:border-[#3499FF]"
+                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-[#3499FF] focus:border-[#3499FF] text-gray-700"
               />
             </div>
 
@@ -167,9 +167,9 @@ export default function IntegrationGateway() {
                 <input
                   type="password"
                   defaultValue="********"
-                  className="w-full border border-gray-300 rounded-lg p-3 pr-12 focus:ring-[#3499FF] focus:border-[#3499FF]"
+                  className="w-full border border-gray-300 rounded-lg p-3 pr-12 text-gray-700 focus:ring-[#3499FF] focus:border-[#3499FF]"
                 />
-                <button className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                <button className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-700">
                   <Eye className="w-5 h-5" />
                 </button>
               </div>
@@ -183,7 +183,7 @@ export default function IntegrationGateway() {
               <input
                 type="text"
                 defaultValue="http://your-system.com/webhook"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-[#3499FF] focus:border-[#3499FF]"
+                className="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:ring-[#3499FF] focus:border-[#3499FF]"
               />
             </div>
 
@@ -200,7 +200,7 @@ export default function IntegrationGateway() {
               </div>
             </div>
 
-            <button className="w-full bg-[#3499FF] text-white px-8 py-3 rounded-lg font-medium shadow-md hover:bg-blue-600 transition mt-4">
+            <button className="w-full bg-[#3499FF] text-white px-8 py-3 rounded-lg font-medium shadow-md hover:bg-blue-600 transition mt-4 cursor-pointer">
               Save Configuration
             </button>
           </div>
