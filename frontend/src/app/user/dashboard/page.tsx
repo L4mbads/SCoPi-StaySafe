@@ -11,7 +11,7 @@ export default function UserDashboard() {
         {/* Sidebar */}
         <UserSideBar />
         {/* Main Content */}
-        <div className="flex-1 p-6">
+        <div className="flex-1 pl-[19vw] p-6" >
           {/* Header */}
           <div className="flex justify-between items-center">
             <div>
