@@ -160,7 +160,7 @@ export default function ReviewQueue() {
                   <option>Low</option>
                 </select>
               </div>
-              <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
+              <button className="w-full bg-gradient-to-r from-blue-800 to-blue-300 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">
                 Filter
               </button>
             </div>

@@ -6,16 +6,14 @@ import Image from "next/image";
 
 const menuItems = [
   { label: "Dashboard", icon: "/dashboard-icon.png", path: "/legal/dashboard" },
-  { label: "Review Queue", icon: "/contract-req-icon.png", path: "/legal/review" },
-  { label: "AI Analysis", icon: "/my-contract-icon.png", path: "/legal/ai_analysis" },
-  { label: "Compliance Check", icon: "/notif-icon.png", path: "/legal/compliance" },
-  { label: "Contract Library", icon: "/notif-icon.png", path: "/legal/contract-library" },
-  { label: "Legal Report", icon: "/notif-icon.png", path: "/legal/legal-report" },
+  { label: "Review Queue", icon: "/material-symbols_rate-review-outline.png", path: "/legal/review" },
+  { label: "AI Analysis", icon: "/ai-analyzer-icon.png", path: "/legal/ai_analysis" },
+  { label: "Compliance Check", icon: "/check.png", path: "/legal/compliance" },
+  { label: "Contract Library", icon: "/books-icon.png", path: "/legal/contract-library" },
+  { label: "Legal Report", icon: "/legal-icon.png", path: "/legal/legal-report" },
 ];
 
-const profileItems = [
-  { label: "My Profile", icon: "/people-icon.png", path: "/legal/profile" },
-];
+const profileItems = [{ label: "My Profile", icon: "/people-icon.png", path: "/legal/profile" }];
 
 export default function LegalSideBar() {
   const pathname = usePathname();
@@ -31,11 +29,8 @@ export default function LegalSideBar() {
               <Link
                 href={item.path}
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${
-                  pathname === item.path
-                    ? "bg-[#DCEDFF] text-[#3A3985] font-semibold"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
+                  pathname === item.path ? "bg-[#DCEDFF] text-[#3A3985] font-semibold" : "text-gray-700 hover:bg-gray-100"
+                }`}>
                 <Image src={item.icon} alt={item.label} width={20} height={20} />
                 <span className="text-base">{item.label}</span>
               </Link>
@@ -53,11 +48,8 @@ export default function LegalSideBar() {
               <Link
                 href={item.path}
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${
-                  pathname === item.path
-                    ? "bg-[#DCEDFF] text-[#3A3985] font-semibold"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
+                  pathname === item.path ? "bg-[#DCEDFF] text-[#3A3985] font-semibold" : "text-gray-700 hover:bg-gray-100"
+                }`}>
                 <Image src={item.icon} alt={item.label} width={20} height={20} />
                 <span className="text-base">{item.label}</span>
               </Link>
