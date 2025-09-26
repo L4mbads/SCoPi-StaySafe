@@ -18,7 +18,8 @@ services:
       - DB_NAME=scopi_db
       - DB_PORT=5432
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   # Frontend Service (Next.js)
   # frontend:
@@ -45,6 +46,11 @@ services:
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - scopi_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   scopi_data:
