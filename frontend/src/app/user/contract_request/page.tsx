@@ -60,7 +60,12 @@ export default function UserContractRequest() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <p className="text-[#3A3985]">Priority</p>
                 </div>
-                  <input type="text" className="border rounded-lg p-2 w-full text-gray-900" />
+                <select className="w-full border rounded px-3 py-2 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                  <option value="" disabled selected className="bg-blue-600 text-white">Pilih prioritas</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
                 <button
                   type="submit"
                   className="w-full bg-gradient-to-r from-[#3A3985] to-[#3499FF] text-white font-semibold py-2 rounded-lg">

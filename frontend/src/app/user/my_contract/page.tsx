@@ -20,12 +20,12 @@ export default function UserMyContract() {
           </div>
 
           {/* Search Section */}
-          <div className="bg-white shadow rounded-2xl p-6 mt-6 flex flex-col gap-6">
+          <div className="bg-white shadow rounded-2xl p-6 mt-6 flex flex-col gap-2">
             {/* Labels */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-sm font-medium text-[#3A3985]">
               <p>Estimated Contract Value</p>
-              <p>Start Date</p>
-              <p>End Date</p>
+              <p>Status</p>
+              <p>Type</p>
             </div>
 
             {/* Inputs */}
@@ -80,8 +80,12 @@ export default function UserMyContract() {
                   <td className="p-3">Rp 800 M</td>
                   <td className="p-3 text-green-600">Active</td>
                   <td className="p-3 flex gap-2">
-                    <button className="text-blue-500">👁️</button>
-                    <button className="text-green-500">⬇️</button>
+                  <button className="group">
+                    <img src="/eye-icon.png" alt="View" className="w-5 group-hover:brightness-75 transition" />
+                  </button>
+                  <button className="group">
+                    <img src="/download-icon.png" alt="Download" className="w-5 h-5 group-hover:brightness-75 transition" />
+                  </button>
                   </td>
                 </tr>
                 <tr className="border-t">
@@ -92,8 +96,12 @@ export default function UserMyContract() {
                   <td className="p-3">Rp 2 B</td>
                   <td className="p-3 text-green-600">Active</td>
                   <td className="p-3 flex gap-2">
-                    <button className="text-blue-500">👁️</button>
-                    <button className="text-green-500">⬇️</button>
+                  <button className="group">
+                    <img src="/eye-icon.png" alt="View" className="w-5 group-hover:brightness-75 transition" />
+                  </button>
+                  <button className="group">
+                    <img src="/download-icon.png" alt="Download" className="w-5 h-5 group-hover:brightness-75 transition" />
+                  </button>
                   </td>
                 </tr>
               </tbody>

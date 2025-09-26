@@ -1,6 +1,6 @@
 export default function Profile() {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-100 pl-[14em]">
       {/* Page Title */}
       <h1 className="text-3xl font-bold text-[#3A3985]">My Profile</h1>
       <p className="text-[#3499FF] mb-6">Manage your account information and preferences</p>
@@ -14,28 +14,28 @@ export default function Profile() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm text-[#3A3985] mb-1">Full Name</label>
-                <input type="text" defaultValue="John Doe" className="w-full border rounded-lg p-2" />
+                <input type="text" defaultValue="John Doe" className="w-full border rounded-lg p-2 text-gray-900" />
               </div>
               <div>
                 <label className="block text-sm text-[#3A3985] mb-1">Email</label>
-                <input type="email" defaultValue="john.doe@gmail.com" className="w-full border rounded-lg p-2" />
+                <input type="email" defaultValue="john.doe@gmail.com" className="w-full border rounded-lg p-2 text-gray-900" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm text-[#3A3985] mb-1">Departemen</label>
-                <input type="text" defaultValue="Procurement" className="w-full border rounded-lg p-2" />
+                <label className="block text-sm text-[#3A3985] mb-1">Department</label>
+                <input type="text" defaultValue="Procurement" className="w-full border rounded-lg p-2 text-gray-900" />
               </div>
               <div>
                 <label className="block text-sm text-[#3A3985] mb-1">Position</label>
-                <input type="text" defaultValue="Procurement Officer" className="w-full border rounded-lg p-2" />
+                <input type="text" defaultValue="Procurement Officer" className="w-full border rounded-lg p-2 text-gray-900" />
               </div>
             </div>
 
             <div>
               <label className="block text-sm text-[#3A3985] mb-1">Phone Number</label>
-              <input type="text" defaultValue="+62 812 3907 8273" className="w-full border rounded-lg p-2" />
+              <input type="text" defaultValue="+62 812 3907 8273" className="w-full border rounded-lg p-2 text-gray-900" />
             </div>
 
             <button
