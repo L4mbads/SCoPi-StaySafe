@@ -2,7 +2,7 @@
 
 import LandingPage from "@/components/landingpage";
 import UserSideBar from "@/components/user_sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function UserContractRequest() {
   const [formData, setFormData] = useState({
@@ -81,6 +81,28 @@ export default function UserContractRequest() {
     }
   };
 
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/contract_request/self", {
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        const data = await response.json();
+        setHistory(data.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
       {/* Navbar */}
@@ -89,7 +111,7 @@ export default function UserContractRequest() {
       <div className="flex flex-1">
         {/* Sidebar */}
         <UserSideBar />
-        
+
         {/* Main Content */}
         <main className="flex-1 p-6 overflow-y-auto">
           {/* Contract Requests Header */}
@@ -169,7 +191,7 @@ export default function UserContractRequest() {
                   <input type="text" name="client_title" value={formData.client_title} onChange={handleChange} required className="mt-1 border rounded-lg p-2 w-full text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"/>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                  <div>
                   <label className="block text-sm font-medium text-gray-700">Service Description</label>
@@ -214,28 +236,24 @@ export default function UserContractRequest() {
                     </tr>
                 </thead>
                 <tbody className="text-gray-800">
-                    <tr className="border-b hover:bg-gray-50">
-                    <td className="p-3">Sep 15, 2024</td>
-                    <td className="p-3">Supplier Contracts</td>
-                    <td className="p-3">PT. Tech Solutions</td>
-                    <td className="p-3">Rp 800 M</td>
-                    <td className="p-3">
-                        <span className="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full">
-                        Legal Team Review
-                        </span>
-                    </td>
-                    </tr>
-                    <tr className="hover:bg-gray-50">
-                    <td className="p-3">Sep 5, 2025</td>
-                    <td className="p-3">Service Contracts</td>
-                    <td className="p-3">CV. Maju Bersama</td>
-                    <td className="p-3">Rp 2 B</td>
-                    <td className="p-3">
-                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full">
-                        Approved
-                        </span>
-                    </td>
-                    </tr>
+                {loading ? (
+                  <></>
+                ) : (<>
+                      {history.map((h, idx) => (
+                        <tr key={idx} className="border-b hover:bg-gray-50">
+                        <td className="p-3">{new Date((h.CreatedAt)).toDateString()}</td>
+                        <td className="p-3">{h.contract_title}</td>
+                        <td className="p-3">{h.company_name}</td>
+                        <td className="p-3">Rp{h.estimated_value}</td>
+                        <td className="p-3">
+                            <span className="px-2 py-1 font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full">
+                            {h.contract_request_status}
+                            </span>
+                        </td>
+                        </tr>
+                      ))}
+                    </>
+                )}
                 </tbody>
                 </table>
             </div>
