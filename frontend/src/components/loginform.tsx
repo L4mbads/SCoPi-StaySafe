@@ -30,7 +30,16 @@ export default function LoginForm() {
       if (response.ok) {
         const data = await response.json();
         console.log(data.message);
-        router.push('/'); // Redirect to the home page on success
+        const role = data.data.role;
+        if(role === "Admin" || role === "AdminTeam") {
+          router.push('/admin/home');
+        } else if(role === "Legal") {
+          router.push('/legal/dashboard'); // Redirect to the home page on success
+        } else if(role === "Executive") {
+          router.push('/management/dashboard'); // Redirect to the home page on success
+        } else if(role === "Internal") {
+          router.push('/user/dashboard'); // Redirect to the home page on success
+        }
       } else {
         // If login failed, get the error message from the response
         const errorData = await response.json();

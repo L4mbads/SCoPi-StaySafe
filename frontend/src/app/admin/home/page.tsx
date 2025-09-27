@@ -4,7 +4,7 @@ import { FaUserPlus, FaEdit, FaTrash } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
-type UserRole = "Admin" | "Tim Hukum" | "Internal" | "Executive";
+type UserRole = "Admin" | "Legal" | "Internal" | "Executive";
 
 type User = {
   name: string;

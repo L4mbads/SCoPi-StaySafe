@@ -21,15 +21,15 @@ func NewAuthService(db *gorm.DB) *AuthService {
 	}
 }
 
-func (as *AuthService) LoginUser(input model.LoginInput) (string, error) {
+func (as *AuthService) LoginUser(input model.LoginInput) (*model.User, string, error) {
 	user, err := as.UserRepository.FindByEmail(input.Email)
 	if err != nil {
-		return "", err
+		return nil, "", err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password))
 	if err != nil {
-		return "", err
+		return nil, "", err
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
@@ -40,8 +40,8 @@ func (as *AuthService) LoginUser(input model.LoginInput) (string, error) {
 
 	tokenString, err := token.SignedString([]byte(os.Getenv("TOKEN_SECRET")))
 	if err != nil {
-		return "", err
+		return nil, "", err
 	}
 
-	return tokenString, nil
+	return user, tokenString, nil
 }

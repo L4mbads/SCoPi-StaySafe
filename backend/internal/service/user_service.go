@@ -51,7 +51,7 @@ func (s *UserService) CreateDefaultAdmin() {
 	if _, err := s.CreateUser(model.RegisterInput{
 		Name:            "admin",
 		Email:           "admin@example.com",
-		Role:            "AdminTeam",
+		Role:            "Admin",
 		Password:        "Admin123",
 		ConfirmPassword: "Admin123",
 	}); err != nil {

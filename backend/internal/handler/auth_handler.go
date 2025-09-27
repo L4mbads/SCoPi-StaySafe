@@ -31,7 +31,7 @@ func (ah AuthHandler) LoginUser(c *gin.Context) {
 		return
 	}
 
-	token, err := ah.AuthService.LoginUser(input)
+	user, token, err := ah.AuthService.LoginUser(input)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"message": "Email atau password salah.",
@@ -47,6 +47,6 @@ func (ah AuthHandler) LoginUser(c *gin.Context) {
 	c.SetCookie("Authorization", token, 3600*24, "", "", true, true)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Login successful",
-		"data":    nil,
+		"data":    user,
 	})
 }
